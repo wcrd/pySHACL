@@ -31,6 +31,7 @@ from pyshacl.consts import (
     SH_ValidationResult,
     SH_value,
     SH_Violation,
+    SH_detail
 )
 from pyshacl.errors import ConstraintLoadError
 from pyshacl.parameter import SHACLParameter
@@ -217,6 +218,7 @@ class ConstraintComponent(object, metaclass=abc.ABCMeta):
         source_constraint: Optional['RDFNode'] = None,
         extra_messages: Optional[Iterable] = None,
         bound_vars=None,
+        node_report: Optional[Iterable] = None
     ):
         """
         :param datagraph:
@@ -252,6 +254,18 @@ class ConstraintComponent(object, metaclass=abc.ABCMeta):
             r_triples.append((r_node, SH_resultPath, (sg, result_path)))
         if source_constraint is not None:
             r_triples.append((r_node, SH_sourceConstraint, (sg, source_constraint)))
+        # add sh:detail, if exists
+        if node_report is not None:
+            for _issue in node_report:
+                # print(focus_node)
+                # print(r_node, SH_detail)
+                #  graph in index pos 2 of report (message, id, triples)
+                _, _bn, _tr = _issue
+                # add blank node
+                r_triples.append((r_node, SH_detail, _bn))
+                # put result triples into bnode
+                for _trip in _tr:
+                    r_triples.append(_trip)
         messages = list(self.shape.message)
         if extra_messages:
             for m in iter(extra_messages):

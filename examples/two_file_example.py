@@ -70,7 +70,7 @@ conforms, v_graph, v_text = validate(data_file, shacl_graph=shapes_file,
                                      data_graph_format=data_file_format,
                                      shacl_graph_format=shapes_file_format,
                                      inference='rdfs', debug=True,
-                                     serialize_report_graph=True)
+                                     serialize_report_graph=False)
 print(conforms)
-print(v_graph)
+print(v_graph.serialize(format="turtle"))
 print(v_text)
