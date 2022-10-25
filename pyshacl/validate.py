@@ -136,9 +136,11 @@ class Validator(object):
         vg.add((vr, RDF_type, SH_ValidationReport))
         vg.add((vr, SH_conforms, Literal(conforms)))
         cloned_nodes: Dict[Tuple[GraphLike, str], Union[BNode, URIRef]] = {}
+        hldg = []
         for result in iter(results):
             _d, _bn, _tr = result
-            v_text += _d
+            # v_text += _d
+            hldg.append(_d)
             vg.add((vr, SH_result, _bn))
             for tr in iter(_tr):
                 s, p, o = tr
@@ -156,6 +158,11 @@ class Validator(object):
                         else:
                             cloned_nodes[(source, _id)] = o = URIRef(_id)
                 vg.add((s, p, o))
+        
+        # process text
+        hldg = set(hldg)
+        v_text += str(hldg)
+        
         return vg, v_text
 
     def __init__(
