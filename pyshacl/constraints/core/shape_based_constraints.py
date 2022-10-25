@@ -192,10 +192,18 @@ class NodeConstraintComponent(ConstraintComponent):
                         _reports.append(rept)
             return _non_conformant, _reports
 
+        # quick hack
+        node_reported = False
         for n_shape in self.node_shapes:
             _nc, _r = _evaluate_node_shape(n_shape)
             non_conformant = non_conformant or _nc
-            reports.extend(_r)
+            # reports.extend(_r)
+            # quick hack to see what is happening
+            if not node_reported:
+                reports.extend(_r)
+                node_reported = True
+
+
         return (not non_conformant), reports
 
 
