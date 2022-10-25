@@ -31,8 +31,8 @@ ex:vfd_basic a sh:NodeShape;
     # list node shapes to use
     sh:node
         ex:vfd_relationships,
-        ex:vfd_points_min
-        # ex:deep_nest_0
+        ex:vfd_points_min,
+        ex:deep_nest_0
     .
 
 
@@ -45,15 +45,17 @@ ex:vfd_points_min a sh:NodeShape;
     # VFD has the minimum set of points
     sh:property ex:point_run_status .
 
-# Double nested shape
+# Triple nested shape
 ex:deep_nest_0 a sh:NodeShape ;
     sh:node ex:deep_nest_1 .
 
 ex:deep_nest_1 a sh:NodeShape ;
-    sh:property [
-        sh:path brick:isPartOf ;
-        sh:class brick:Fan
-    ]
+    sh:property ex:deep_nest_property_1 ;
+    sh:node ex:deep_nest_2 ;
+    .
+
+ex:deep_nest_2 a sh:NodeShape ;
+    sh:property ex:deep_nest_property_2
     .
 
 # PROPERTY SHAPES
@@ -75,6 +77,13 @@ ex:point_run_status a sh:PropertyShape ;
     ]
     .
 
+ex:deep_nest_property_1 a sh:PropertyShape ;
+    sh:path brick:isPartOf ;
+    sh:class brick:Fan .
+
+ex:deep_nest_property_2 a sh:PropertyShape ;
+    sh:path brick:isPartOf ;
+    sh:class brick:Fan .
 '''
 
 data_graph = '''
