@@ -10,3 +10,6 @@ __version__ = '0.20.0'
 # Don't forget to change the version number in pyproject.toml, Dockerfile, and CITATION.cff along with this one
 
 __all__ = ['validate', 'Validator', '__version__', 'Shape', 'ShapesGraph']
+
+
+print("From pySHACL: This is WD's test version for local dev....")
